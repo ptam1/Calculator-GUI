@@ -24,7 +24,7 @@ public class Calculator extends JFrame
 
     JButton numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9, dotBtn, entrBtn, addBtn, subBtn, divideBtn, mulBtn;
     JTextField text;
-  //  private static Double num = 0.0;
+    Double num = 0.0;
     private static Double sum = 0.0;
   
     
@@ -35,10 +35,7 @@ public class Calculator extends JFrame
         guiLogistics();
     }
      
-    
-    
-    
-    
+      
     private void guiLogistics()
     {
         numBtn0 = new JButton("0");
@@ -80,25 +77,36 @@ public class Calculator extends JFrame
     public void calculate()
     {
        JButton button[] = {numBtn0,numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9};
-    
-       Double num;
-       
+   
        for(int i =0; i < button.length; i++)
        {
-           
+            num = Double.parseDouble(button[i].getText()); 
+            button[i].addActionListener(new ActionListener()
+    { 
+        @Override
+        public void actionPerformed(ActionEvent e)
+        {
+         text.setText(Double.toString(num));  
+        }
+    });
+            if(addBtn.isSelected())
+           {
+               sum += num; 
+               text.setText(Double.toString(sum));
+            
+           }
+            else if(subBtn.isSelected())
+           {
+               sum -= num;
+               text.setText(Double.toString(sum));
+           }
        }
 
   
 }
 
 
-                
-    
-  
-               
-               
-               
-               
+       
                
     public void createGUI(JComponent... arg)
     {
@@ -190,9 +198,6 @@ layout.setVerticalGroup(layout.createSequentialGroup()
              calc.setVisible(true);
        
     }
-
-
-
-    }
+   }
     
 
