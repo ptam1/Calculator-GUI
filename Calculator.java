@@ -56,6 +56,44 @@ public class Calculator extends JFrame
       
          calculate();
         
+            addBtn.addActionListener(new ActionListener()
+      {
+      @Override 
+      public void actionPerformed(ActionEvent e)
+      {
+         sum += num;
+         text.setText(Integer.toString(num));
+         //text.setText(Integer.toString(sum));
+      }
+      });  
+            
+             subBtn.addActionListener(new ActionListener()
+      {
+      @Override 
+      public void actionPerformed(ActionEvent e)
+      {
+         sum -= num;
+         text.setText(Integer.toString(sum));
+      }
+      });  
+              mulBtn.addActionListener(new ActionListener()
+      {
+      @Override 
+      public void actionPerformed(ActionEvent e)
+      {
+         sum *= num;
+         text.setText(Integer.toString(sum));
+      }
+      });  
+               divideBtn.addActionListener(new ActionListener()
+      {
+      @Override 
+      public void actionPerformed(ActionEvent e)
+      {
+         sum /= num;
+         text.setText(Integer.toString(sum));
+      }
+      });  
           cancelBtn.addActionListener(new ActionListener()
       {
       @Override 
