@@ -21,11 +21,12 @@ import javax.swing.JTextField;
 public class Calculator extends JFrame  
  {
 
-    JButton numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9, cancelBtn, addBtn, subBtn, divideBtn, mulBtn;
+    JButton numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9, cancelBtn, addBtn, subBtn, divideBtn, mulBtn, equalBtn;
     JTextField text;
-    private static int num = 0;
-    private static int sum = 0;
-    
+    private static int num;
+    private static int sum;
+
+   
     
     public Calculator()
     {
@@ -49,22 +50,47 @@ public class Calculator extends JFrame
         subBtn = new JButton("-");
         divideBtn = new JButton("÷");
         mulBtn = new JButton("X"); 
+        equalBtn = new JButton("=");
         
-        text = new JTextField("");
+        //intialize textfield that displays input and calculations
+        text = new JTextField(10);
         text.setEditable(false);
         text.setFont(new Font("Times New Roman", Font.BOLD, 22));
       
-         calculate();
+         
         
+           setButton();
+              
+             equalBtn.addActionListener(new ActionListener()
+        {
+            
+            JButton calcBtns[] = {addBtn, subBtn, mulBtn, divideBtn, cancelBtn};  
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                for(int i =0; i < calcBtns.length; i++)
+                {
+                if(calcBtns[i].isEnabled())
+                {  
+                      addBtn.addActionListener(this);
+                     sum = Integer.parseInt(text.getText());
+                   
+                      text.setText(Integer.toString(sum));
+                    
+                }
+                               
+            } 
+            }
+        });
+             
             addBtn.addActionListener(new ActionListener()
       {
       @Override 
       public void actionPerformed(ActionEvent e)
       {
+         
          sum += num;
-         text.setText(Integer.toString(num));
-         //text.setText(Integer.toString(sum));
-      }
+    }
       });  
             
              subBtn.addActionListener(new ActionListener()
@@ -72,28 +98,32 @@ public class Calculator extends JFrame
       @Override 
       public void actionPerformed(ActionEvent e)
       {
-         sum -= num;
-         text.setText(Integer.toString(sum));
+             sum -= num;
+    
       }
       });  
+             
               mulBtn.addActionListener(new ActionListener()
       {
+         
       @Override 
       public void actionPerformed(ActionEvent e)
       {
-         sum *= num;
-         text.setText(Integer.toString(sum));
+                sum *= num;
+        
       }
       });  
+              
                divideBtn.addActionListener(new ActionListener()
       {
       @Override 
       public void actionPerformed(ActionEvent e)
       {
-         sum /= num;
-         text.setText(Integer.toString(sum));
+                sum /= num;
+       
       }
       });  
+               
           cancelBtn.addActionListener(new ActionListener()
       {
       @Override 
@@ -101,98 +131,41 @@ public class Calculator extends JFrame
       {
          num = 0;
          sum = 0;
-         text.setText("");
+         text.setText("0");
       }
-      });  
-     
-       createGUI(numBtn0,numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9, addBtn, subBtn, mulBtn, divideBtn);
+      }); 
+          
+ 
+       createGUI(numBtn0,numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9, addBtn, subBtn, mulBtn, divideBtn, cancelBtn);
     }
-    
-  
- private void calculate()
- {
-     
-       JButton button[] = {numBtn0,numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9};
-       for(int i =0; i < button.length; i++)
-         {
-             num = Integer.parseInt(button[i].getText());
-             String showNum = button[i].getText();
-             button[i].addActionListener(new ActionListener()
-      {
-      @Override 
-      public void actionPerformed(ActionEvent e)
-      {
-         text.setText(showNum);
-      }
-      });
-             
-         }
- }
 
-    
-       /*
       
-           
+ public void setButton()
+ {
+     JButton button[] = {numBtn0, numBtn1, numBtn2, numBtn3, numBtn4, numBtn5, numBtn6, numBtn7, numBtn8, numBtn9};
+   
+    for(int i =0; i < button.length; i++)
+         {
+            String showNum = button[i].getText(); 
             
-            
-            button[i].addActionListener(new ActionListener()
-        { 
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-         text.setText(Double.toString(num)); 
-        }
-        });
-       }
-           
-            else if(addBtn.isSelected())
-           {
-               sum += num; 
-               addBtn.addActionListener(new ActionListener()
-        { 
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-         text.setText(Double.toString(sum)); 
-        }
-        });
-        }
-            else if(subBtn.isSelected())
-           {
-               sum -= num;
-               subBtn.addActionListener(new ActionListener()
-        { 
-        @Override
-        public void actionPerformed(ActionEvent e)
-        {
-         text.setText(Double.toString(sum)); 
-        }
-        });
-        }
-            else if(mulBtn.isSelected())
-            {
-               sum *= num;
-               text.setText(Double.toString(sum));
-            }
-            else if(divideBtn.isSelected())
-            {
-               sum /= num;
-               text.setText(Double.toString(sum));
-            } */
-           
-       
-    
-    
-    
+            button[i].addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                   
+                    
+                     text.setText(showNum);  
+                     num = Integer.parseInt(showNum); 
+                
 
-
-       
-               
+         }
+        });                 
+         }
+ } 
+           
     public void createGUI(JComponent... arg)
     {
        
         JFrame frame = new JFrame("Calculator");
-        frame.setPreferredSize(new Dimension(400, 400));
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
@@ -208,9 +181,9 @@ public class Calculator extends JFrame
             
 layout.setHorizontalGroup(layout.createSequentialGroup()
               
-   // .addGroup(layout.createSequentialGroup()
-   // .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-             .addComponent(text)
+    .addGroup(layout.createSequentialGroup()
+    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+             .addComponent(text)))
   .addGroup(layout.createSequentialGroup()
   .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                .addComponent(numBtn0)
@@ -221,8 +194,8 @@ layout.setHorizontalGroup(layout.createSequentialGroup()
      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                .addComponent(numBtn1)
                .addComponent(numBtn4)
-               .addComponent(numBtn7)))
-             //  .addComponent(dotBtn)))
+               .addComponent(numBtn7)
+               .addComponent(equalBtn)))
     .addGroup(layout.createSequentialGroup()
      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING) 
               .addComponent(numBtn2)
@@ -231,7 +204,7 @@ layout.setHorizontalGroup(layout.createSequentialGroup()
               .addComponent(mulBtn)))
      .addGroup(layout.createSequentialGroup()
      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING) 
-             //.addComponent(entrBtn)
+             .addComponent(cancelBtn)
              .addComponent(addBtn)
              .addComponent(subBtn)
              .addComponent(numBtn8)
@@ -239,15 +212,16 @@ layout.setHorizontalGroup(layout.createSequentialGroup()
     );
 
 layout.setVerticalGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-            .addComponent(text))
+       
     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
     .addGroup(layout.createSequentialGroup()
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+            .addComponent(text)
             .addComponent(numBtn0)
             .addComponent(numBtn1)
-            .addComponent(numBtn2))
-          //  .addComponent(entrBtn))
+            .addComponent(numBtn2)
+            .addComponent(cancelBtn)))
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(numBtn3)
             .addComponent(numBtn4)
@@ -260,7 +234,7 @@ layout.setVerticalGroup(layout.createSequentialGroup()
             .addComponent(subBtn))
          .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
             .addComponent(numBtn9)
-         //   .addComponent(dotBtn)
+            .addComponent(equalBtn)
             .addComponent(mulBtn)
             .addComponent(divideBtn))))
               
